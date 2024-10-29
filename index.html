@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <title>Listado de Autos</title>
+</head>
+<body>
+    <h1>Listado de Autos</h1>
+    <div id="autos-list"></div>
+
+    <footer>
+        <p>&copy; 2024 - Lista de Autos</p>
+    </footer>
+
+    <script>
+        // Consumir API REST
+        fetch('https://grim-vampire-57vvgg5q6gr2pg4q-8000.app.github.dev/autos/')
+            .then(response => response.json())
+            .then(data => {
+                const autosList = document.getElementById('autos-list');
+                data.forEach(auto => {
+                    const autoElement = document.createElement('div');
+                    autoElement.classList.add('auto-card');
+                    autoElement.innerHTML = `
+                        <h2>${auto.modelo} (${auto.marca})</h2>
+                        <p><strong>Matrícula:</strong> ${auto.matricula}</p>
+                        <p><strong>Color:</strong> ${auto.color}</p>
+                        <p><strong>Motor:</strong> ${auto.motor}</p>
+                        <hr />
+                    `;
+                    autosList.appendChild(autoElement);
+                });
+            })
+            .catch(error => console.error('Error al obtener los autos:', error));
+    </script>
+</body>
+</html>
